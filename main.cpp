@@ -38,8 +38,8 @@ int main() {
     std::cout << "Reading data..." << std::endl << std::endl;
 
     //make data structures
-    redBlackTree* mapNames = new redBlackTree();
-    HashMap* mapAcode = new HashMap(10); //intialized to 10 just to show rehashing works
+    redBlackTree mapNames;
+    HashMap mapAcode(10); //intialized to 10 just to show rehashing works
 
 
     while(std::getline(data, line)) {
@@ -68,8 +68,8 @@ int main() {
         //std::cout << aCode << " " << pNum << " " << name << std::endl;
 
         //here would be inserting each into the created map functions
-        mapNames->insert(pNum, name);
-        mapAcode->insert(aCode, pNum);
+        mapNames.insert(pNum, name);
+        mapAcode.insert(aCode, pNum);
 
 
     }
@@ -112,7 +112,7 @@ int main() {
 
                 //use find function to get number and name
                 std::cout << "Searching for " << num << std::endl;
-                mapNames->searchNumber(num);
+                mapNames.searchNumber(num);
 
             }
 
@@ -127,7 +127,7 @@ int main() {
 
             //make call to search for name
             std::cout << "Searching for numbers associated with " << name << std::endl;
-            mapNames->searchName(name);
+            mapNames.searchName(name);
 
         }else if(user == 3){
 
@@ -146,7 +146,7 @@ int main() {
 
                 std::cout << "Searching for all numbers in " << aCode << std::endl;
                 //make call to search area code
-                mapAcode->printNumOfAreaCode(aCode);
+                mapAcode.printNumOfAreaCode(aCode);
 
             }
 
@@ -176,8 +176,8 @@ int main() {
                 //Test to make sure inputs work
                 std::cout << "Inserting " << name << " " << pNum << " into DNC list" << std::endl;
                 int aCode = std::stoi(num.substr(0, 3));
-                mapNames->insert(pNum, name);
-                mapAcode->insert(aCode, pNum);
+                mapNames.insert(pNum, name);
+                mapAcode.insert(aCode, pNum);
 
             }
 
@@ -193,8 +193,6 @@ int main() {
 
 
     }
-    delete mapNames;
-    delete mapAcode;
 
 
     return 0;

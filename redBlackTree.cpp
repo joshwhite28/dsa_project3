@@ -137,13 +137,13 @@ void redBlackTree::searchNumber(long long phoneNumber){
     while (currentNode != nullptr && currentNode->phoneNumber != phoneNumber) {
         if (phoneNumber < currentNode->phoneNumber) {
             currentNode = currentNode->left;
-        }else if(currentNode->phoneNumber == phoneNumber){
+        }else if( phoneNumber > currentNode->phoneNumber ){
 
-            cout << currentNode->name << endl;
-            return;
+            currentNode = currentNode->right;
 
         } else {
-            currentNode = currentNode->right;
+            cout << currentNode->name << endl;
+            return;
         }
     }
     if (currentNode != nullptr){
@@ -170,6 +170,7 @@ void redBlackTree::searchNameHelper(const string& name, node* currentNode, bool&
     if (currentNode == nullptr) {
         return;
     }
+    searchNameHelper(name, currentNode->left, exists, nums);
     if (currentNode->name == name) {
         exists = true;
         bool isIn = false;
@@ -183,7 +184,6 @@ void redBlackTree::searchNameHelper(const string& name, node* currentNode, bool&
             nums.push_back(currentNode->phoneNumber);
         }
     }
-    searchNameHelper(name, currentNode->left, exists, nums);
     searchNameHelper(name, currentNode->right, exists, nums);
 }
 
