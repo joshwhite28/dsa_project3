@@ -1,6 +1,9 @@
 #include "redBlackTree.h"
 #include <iomanip>
-
+#include <vector>
+redBlackTree::redBlackTree() {
+    root = nullptr;
+}
 
 void redBlackTree::insert(long long phoneNumber, const string& name){
     node* newNode = new node(phoneNumber, name);
@@ -134,6 +137,11 @@ void redBlackTree::searchNumber(long long phoneNumber){
     while (currentNode != nullptr && currentNode->phoneNumber != phoneNumber) {
         if (phoneNumber < currentNode->phoneNumber) {
             currentNode = currentNode->left;
+        }else if(currentNode->phoneNumber == phoneNumber){
+
+            cout << currentNode->name << endl;
+            return;
+
         } else {
             currentNode = currentNode->right;
         }
@@ -148,22 +156,37 @@ void redBlackTree::searchNumber(long long phoneNumber){
 
 void redBlackTree::searchName(const string& name){
     bool hasPrinted = false;
-    searchNameHelper(name, this->root, hasPrinted);
+    vector<long long int> nums;
+    searchNameHelper(name, this->root, hasPrinted, nums);
+    for(auto iter = nums.begin(); iter != nums.end(); iter++){
+        cout << *iter << endl;
+    }
     if (!hasPrinted){
         cout << "Name Not Found" << endl;
     }
 }
 
-void redBlackTree::searchNameHelper(const string& name, node* currentNode, bool& exists){ // full in order traversal since tree is sorted by phonenumber, not name. Name locations are not relative to each other
-if (currentNode != nullptr) {
-        searchNameHelper(name, currentNode->left, exists);
-        if (currentNode->name == name){
-            cout << currentNode->phoneNumber << endl;
-            exists = true;
-        }
-        searchNameHelper(name, currentNode->right, exists);
+void redBlackTree::searchNameHelper(const string& name, node* currentNode, bool& exists, vector<long long int>& nums) { // full in order traversal since tree is sorted by phonenumber, not name. Name locations are not relative to each other
+    if (currentNode == nullptr) {
+        return;
     }
+    if (currentNode->name == name) {
+        exists = true;
+        bool isIn = false;
+        for(auto iter = nums.begin(); iter != nums.end(); iter++){
+            if(*iter == currentNode->phoneNumber){
+                isIn = true;
+                break;
+            }
+        }
+        if(!isIn){
+            nums.push_back(currentNode->phoneNumber);
+        }
+    }
+    searchNameHelper(name, currentNode->left, exists, nums);
+    searchNameHelper(name, currentNode->right, exists, nums);
 }
+
 
 void redBlackTree::inOrderTraversal(node* currentNode){
     if (currentNode != nullptr) {

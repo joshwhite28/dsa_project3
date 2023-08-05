@@ -137,14 +137,14 @@ class HashMap{
 };
 
 //extract first three digits of the phone number
-long long extractAreaCode(long long int number) {
+/*long long extractAreaCode(long long int number) {
     while (number >= 1000) {
         number /= 10;
     }
     return number;
 }
-
-int main() {
+*/
+/*int main() {
     HashMap hm(2);  // Start with a small table to test resizing
 
     int areaCode1 = extractAreaCode(2125678901);
@@ -176,3 +176,4 @@ int main() {
 
     return 0;
 }
+ */

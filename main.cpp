@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "redBlackTree.h"
+#include "hashmap.cpp"
 
 //function to check if given user input is a number or not, returns a long long int since phone numbers are large
 long long int returnNum(std::string num){
@@ -26,15 +28,18 @@ long long int returnNum(std::string num){
 }
 
 int main() {
-
     std::ifstream data;
-    data.open("../maindata.csv");
+    data.open("../data100k.csv");
     std::string line;
     std::getline(data, line);
     //clear header data
 
     std::cout << "Welcome to Don't Call Me!" << std::endl << std::endl;
     std::cout << "Reading data..." << std::endl << std::endl;
+
+    //make data structures
+    redBlackTree* mapNames = new redBlackTree();
+    HashMap* mapAcode = new HashMap(10); //intialized to 10 just to show rehashing works
 
 
     while(std::getline(data, line)) {
@@ -60,9 +65,11 @@ int main() {
         aCode = std::stoi(code);
 
         //below is commented out since it was used in testing only
-        std::cout << aCode << " " << pNum << " " << name << std::endl;
+        //std::cout << aCode << " " << pNum << " " << name << std::endl;
 
         //here would be inserting each into the created map functions
+        mapNames->insert(pNum, name);
+        mapAcode->insert(aCode, pNum);
 
 
     }
@@ -105,6 +112,7 @@ int main() {
 
                 //use find function to get number and name
                 std::cout << "Searching for " << num << std::endl;
+                mapNames->searchNumber(num);
 
             }
 
@@ -119,6 +127,7 @@ int main() {
 
             //make call to search for name
             std::cout << "Searching for numbers associated with " << name << std::endl;
+            mapNames->searchName(name);
 
         }else if(user == 3){
 
@@ -137,6 +146,7 @@ int main() {
 
                 std::cout << "Searching for all numbers in " << aCode << std::endl;
                 //make call to search area code
+                mapAcode->printNumOfAreaCode(aCode);
 
             }
 
@@ -165,6 +175,9 @@ int main() {
                 //make call to insert name a number
                 //Test to make sure inputs work
                 std::cout << "Inserting " << name << " " << pNum << " into DNC list" << std::endl;
+                int aCode = std::stoi(num.substr(0, 3));
+                mapNames->insert(pNum, name);
+                mapAcode->insert(aCode, pNum);
 
             }
 
@@ -180,6 +193,8 @@ int main() {
 
 
     }
+    delete mapNames;
+    delete mapAcode;
 
 
     return 0;

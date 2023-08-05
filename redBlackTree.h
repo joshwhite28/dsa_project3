@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iomanip>
 #include <sstream>
+#include <vector>
 using namespace std;
 
 
@@ -32,7 +33,7 @@ private:
     void maintainProperties(node* currentNode); // Done
 
     //Implementation Helpers
-    void searchNameHelper(const string& name,  node* currentNode, bool& exists); // Done
+    void searchNameHelper(const string& name,  node* currentNode, bool& exists, vector<long long int>& names); // Done
     void getFullAreaCode(node* currentNode, int wantedAreaCode, bool& exists); // Done
 
     //Destructor Helper
